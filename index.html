@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Signup Page</title>
+		<style>
+			body{
+				padding: 22px;
+			}
+			#main_container {
+				height: 454px;
+				width: 668px;
+				padding: 48px 40px 36px 40px; 
+				margin: auto;
+				border-radius: 8px;
+				border-style: solid;
+  				border-width: 1px;
+  				border-color: #dadce0;
+			}
+			#signup_container {
+				float: left;
+				height: 454px;
+				width: 368px;
+				margin-left: -48px;
+				margin-right: -48px; 
+				padding-left: 48px;
+				padding-right: 48px;
+			} 
+			#logo_container {
+				float: left;
+				padding-left: 48px;
+				height: 454px;
+				width: 252px;
+			} 
+			.container{
+				clear:both;
+				width: 100%;
+				padding: 1px;
+				display: table;
+		    	table-layout: fixed;
+				height: 60px;
+			}
+			.input_wrapper{
+				display: table-cell;
+				padding-top: 3px;
+				padding-right: 8px;
+			}
+			
+			#emailinfo{
+				height: 50px;
+			}
+			#passwordinfo{
+				height: 50px;
+			}
+			.input_field{
+				margin-right: 30px;
+			}
+			.input_field input{
+				width: 100%;
+				display: block;
+				border-radius: 4px;
+				border: solid #dadce0 1px;
+				font-size: 14px;
+			    height: 20px;
+			    padding: 7px 11px;
+			}
+			.warning{
+				font-size: 13px;
+				padding-top: 6px;
+				color:red;
+				display: none;
+				height: 44px;
+				width: auto;
+			}
+			.infopanel{
+				display: table-row;
+				line-height: 30px;
+				font-size: 13px;
+				color:black;
+				margin-bottom: 50px;
+			}
+			#google{
+				height: 24px;
+				font-size: 20px;
+			}
+			#signup_form{
+				
+			}
+			#info{
+				width: 368px;
+				height: 80px;
+			}
+			#info > h2{
+				margin:0px;
+				height: 32px;
+				padding-top: 16px;
+			}
+			#info > p{
+				margin:0px;
+				height: 24px;
+				padding-top: 8px;
+			}
+			form{
+				margin-top: 25px;
+			}
+			#reg_form{
+				display: block;
+			}
+			#phone_form{
+				display: none;
+			}
+			#login{
+				margin-top: 10px;
+				padding-top:10px;
+				float: left;
+				text-decoration: none;
+				color:#1a73e8;
+			}
+			#next{
+				margin: 10px;
+				padding:10px;
+				float: right;
+				width: 100px;
+				border-radius: 3px;
+			}
+			figure {
+			    margin-right: 4px;
+			    margin-left: 4px;
+			    margin-top: 80px;
+			}
+			figcaption {
+			    display: block;
+			    text-align: center;
+			}
+			
+			.showhide img{
+				height: 24px;
+				width: 24px;
+				padding-bottom: 5px;
+				vertical-align: middle;
+				cursor:pointer;
+			}
+			#show{
+				display: none;
+			}
+			div[id=password_warning]{
+				width: 156px;
+			}
+		</style>
+		<script>
+			function validate_form(){
+
+				var first_name_tag = document.getElementById("first_name");               
+			    var last_name_tag = document.getElementById("last_name");
+			    var password_tag = document.getElementById("password");
+			    var confirm_tag =  document.getElementById("confirm");
+			    var email_tag = document.getElementById("email");
+
+			    var fname = first_name_tag.value;
+			    var lname = last_name.value;
+			    var password = password_tag.value;
+			    var confirm = confirm_tag.value;
+			    var email = email_tag.value;
+
+			    var fn_warning_div = document.getElementById("fn_warning");
+			    var ln_warning_div = document.getElementById("ln_warning");
+			    var email_warning_div = document.getElementById("email_warning");
+			    var password_warning_div = document.getElementById("password_warning");
+			    var confirm_warning_div = document.getElementById("confirm_warning");
+			    var email_info_div = document.getElementById("emailinfo");
+			    var password_info_div = document.getElementById("passwordinfo");
+			    function reset_confirm(){
+			    	confirm_tag.style.borderColor = "grey";
+		    		confirm_warning_div.innerHTML = "";
+		    		confirm_tag.value = "";
+			    }
+
+			    function check_fn(){
+			    	var warning = "";
+			    	if(fname==""){
+			    		warning = "Enter first name";
+				    }
+				    if(warning){
+				    	first_name_tag.style.borderColor = "red";
+				    	setdisplay(fn_warning_div,"block");
+				    	fn_warning_div.innerHTML = warning;
+				    }else{
+				    	first_name_tag.style.borderColor = "grey";
+				    	setdisplay(fn_warning_div,"none");
+				    }
+				    return warning == "";
+			    }
+
+			    function check_ln(){
+			    	var warning = "";
+			    	if(lname==""){
+			    		warning = "Enter last name";
+				    }
+				    if(warning){
+				    	last_name_tag.style.borderColor = "red";
+				    	setdisplay(ln_warning_div,"block");
+				    	ln_warning_div.innerHTML = warning;
+				    }else{
+				    	last_name_tag.style.borderColor = "grey";
+				    	setdisplay(ln_warning_div,"none");
+				    }
+				    return warning == "";
+			    }
+
+			    function check_email(){
+			    	if(email.endsWith("@gmail.com")){
+			    		email = email.replace("@gmail.com","");
+			    	}
+			    	var email_regex = /^[\w.]+$/;
+			 		
+			    	var warning = "";
+				    if(email==""){
+				    	warning = "Choose a Gmail address";
+				    }else if(!email_regex.test(email)){
+				    	warning = "Sorry, only letters (a-z), numbers (0-9), and periods (.) are allowed."
+				    }
+				    if(warning){
+ 						toggledisplay(email_info_div,"none",email_warning_div,"block");
+				    	email_tag.style.borderColor = "red";
+					    email_warning_div.innerHTML = warning;
+				    }else{
+				    	email_tag.style.borderColor = "grey";
+					    email += "@gmail.com";
+ 						toggledisplay(email_info_div,"table-row",email_warning_div,"none");
+				    }
+				    return warning == "";
+			    }
+
+			    function check_password(){
+			    	var warning = "";
+				    if(password==""){
+				    	warning = "Enter password";
+				    }else if(password.length < 8 && password.length > 0){
+				    	warning = "Use 8 characters or more";
+				    }
+				    if(warning){
+				    	toggledisplay(password_info_div,"none",password_warning_div,"block");
+				    	password_tag.style.borderColor = "red";
+				    	reset_confirm();
+				    	password_warning_div.innerHTML = warning;
+				    }else{
+				    	password_tag.style.borderColor = "grey";
+				    	setdisplay(password_warning_div,"none");
+				    }
+				    return warning == "";
+			    }
+
+			    function check_confirm(){
+			    	var warning = "";
+			    	if(confirm==""){
+				    	warning = "Confirm your password";
+				    }else if(password!=confirm){
+				    	warning = "Passwords do not match!";
+				    }
+				    if(warning){
+				    	toggledisplay(password_info_div,"none",confirm_warning_div,"block");
+				    	confirm_tag.style.borderColor = "red";
+				    	confirm_tag.value = "";
+				    	confirm_warning_div.innerHTML = warning;
+				    }else{
+				    	confirm_tag.style.borderColor = "grey";
+				    	setdisplay(confirm_warning_div,"none");
+				    }
+				    return warning == "";
+			    }
+
+
+			    function check_password_strength(){
+			    	var strong_password_regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+			    	if(!strong_password_regex.test(password)){
+			    		toggledisplay(password_info_div,"none",password_warning_div,"block");
+			    		password_warning_div.innerHTML = "Please choose a stronger password. Try a mix of letters, numbers, and symbols.";
+			    		reset_confirm();
+			    		password_tag.style.borderColor = "red";
+			    	}else{
+			    		return true;
+			    		setdisplay(password_info_div,"block");
+			    	}
+			    }
+
+
+			    function toggledisplay(elem1,val1,elem2,val2){
+			    	elem1.style.display = val1;
+			    	elem2.style.display = val2;
+			    }
+
+			    function setdisplay(elem,val){
+			    	elem.style.display = val;
+			    }
+
+			    var valid_count = 0;
+ 				if(check_fn()){
+ 					valid_count++;
+ 				}
+ 				if(check_ln()){
+ 					valid_count++;
+ 				}
+ 				if(check_email()){
+ 					valid_count++;
+ 				}
+ 				if(check_password()){
+ 					valid_count++;
+ 					if(check_confirm()){
+ 						valid_count++;
+ 						if(check_password_strength()){
+ 							valid_count++;
+ 						}
+ 					}
+ 				}
+ 				if(valid_count == 6){
+ 					alert("All good!");
+ 					return true;
+ 				}
+			    return false;
+			}
+
+			function hide() {
+			  	document.getElementById("password").type = "password";
+			  	document.getElementById("confirm").type = "password";
+			  	document.getElementById("show").style.display="none";
+			  	document.getElementById("hide").style.display="block";
+			}
+			function show() {
+			    document.getElementById("password").type = "text";
+			  	document.getElementById("confirm").type = "text";
+			  	document.getElementById("show").style.display="block";
+			  	document.getElementById("hide").style.display="none";
+			}
+		</script>
+	</head>
+	<body>
+		<div id="main_container">
+			<div id="signup_container">
+				<div id="google">Google</div>
+				<div id="signup_form">
+					<div id="info">
+						<h2>
+							Create your Google Account
+						</h2>
+						<p>
+							Continue to Gmail
+						</p>
+					</div>
+					<form id="reg_form" name="RegForm" onsubmit="return validate_form()" method="post">
+						<div id="name_container" class="container">
+							<div class="input_wrapper">
+								<div class="input_field">
+									<input type="text" name="first_name" id="first_name" placeholder="First Name">
+								</div>
+								<div>
+									<div class="warning" id="fn_warning"></div>	
+								</div>
+							</div>
+							<div class="input_wrapper">
+								<div class="input_field">
+									<input type="text" name="last_name" id="last_name" placeholder="Last Name">
+								</div>
+								<div>
+									<div class="warning" id="ln_warning"></div>	
+								</div>
+							</div>
+						</div>
+						<div id="email_container" class="container">
+							<div class="input_wrapper">
+								<div class="input_field">
+									<input type="text" name="email" id="email" placeholder="Username">
+								</div>
+								<div>
+									<div class="warning" id="email_warning"></div>	
+								</div>
+							</div>
+							<div  class="infopanel">
+								<div id="emailinfo">
+									You can use letters, numbers & periods
+								</div>
+							</div>
+						</div>
+						<div id="password_container" class="container">
+							<div class="input_wrapper">
+								<div class="input_wrapper">
+									<div class="input_field">
+										<input type="password" id="password" name="password" placeholder="Password">
+									</div>
+									<div>
+										<div class="warning" id="password_warning"></div>
+									</div>
+								</div>
+								<div class="input_wrapper">
+									<div class="input_field">
+										<input type="password" name="confirm" id="confirm" placeholder="Confirm">
+									</div>
+									<div>
+										<div class="warning" id="confirm_warning"></div>
+									</div>
+								</div>
+								<div class="input_wrapper">
+									<div onclick="show()" class ="showhide" id="hide" ><img src="hide.png"></div>
+									<div onclick="hide()" class="showhide" id="show" ><img src="show.png"></div>
+								</div>
+							</div>
+							<div  class="infopanel">
+								<div id="passwordinfo">
+									Use 8 or more characters with a mix of letters, numbers & symbols
+								</div>
+							</div>
+						</div>
+						<div id="submit_container" class="container">
+							<a href="login.php" id="login">Sign in instead</a>
+							<button type="submit" name="NEXT" value="NEXT" id="next">NEXT</button>
+						</div>
+					</form>
+					<form id="phone_form" name="PhoneForm" onsubmit="return validate_phone()" method="post" novalidate>
+						
+					</form>
+				</div>	
+			</div>
+			<div id="logo_container">
+				<figure class="btOOZe" style="">
+					<img id="showhideimage" src="account.svg" alt="" width="244" height="244">
+					<figcaption>
+						One account. All of Google working for you.
+					</figcaption>
+				</figure>
+			</div>
+		</div>
+	</body>
+</html>
