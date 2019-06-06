@@ -82,9 +82,6 @@
 				height: 24px;
 				font-size: 20px;
 			}
-			#signup_form{
-				
-			}
 			#info{
 				width: 368px;
 				height: 80px;
@@ -102,25 +99,24 @@
 			form{
 				margin-top: 25px;
 			}
-			#reg_form{
-				display: block;
-			}
-			#phone_form{
-				display: none;
-			}
-			#login{
+			
+			.login{
 				margin-top: 10px;
 				padding-top:10px;
 				float: left;
 				text-decoration: none;
 				color:#1a73e8;
 			}
-			#next{
+			.next{
 				margin: 10px;
 				padding:10px;
 				float: right;
 				width: 100px;
 				border-radius: 3px;
+				background-color:rgb(26, 115, 232);
+				color:white;
+				font-weight: bold;
+				cursor: pointer;
 			}
 			figure {
 			    margin-right: 4px;
@@ -145,10 +141,55 @@
 			div[id=password_warning]{
 				width: 156px;
 			}
+			#reg_container{
+				display: block;
+			}
+			#phone_container{
+				display: none;
+			}
+			#phone_form{
+				margin-top: 60px;
+			}
+			#verification_form{
+				margin-top: 60px;
+			}
+			#verification_form{
+				display: none;
+			}
+			#phone_number{
+				font-weight: bold;
+				margin:10px;
+			}
 		</style>
 		<script>
-			function validate_form(){
+			var reg_container, phone_container;
+			
+			function iniVar(){
+				reg_container = document.getElementById("reg_container");
+				phone_container = document.getElementById("phone_container");
+			}
 
+			function first_page() {
+				toggledisplay(reg_container,"block",phone_container,"none");
+				document.getElementById("password").value = "";
+				document.getElementById("confirm").value = "";
+			}
+				
+			function second_page() {
+				document.getElementById("phone_form").style.display = "block";
+				document.getElementById("verification_form").style.display = "none";
+			}
+
+		    function toggledisplay(elem1,val1,elem2,val2){
+		    	elem1.style.display = val1;
+		    	elem2.style.display = val2;
+		    }
+
+		    function setdisplay(elem,val){
+		    	elem.style.display = val;
+		    }
+
+			function validate_form(){
 				var first_name_tag = document.getElementById("first_name");               
 			    var last_name_tag = document.getElementById("last_name");
 			    var password_tag = document.getElementById("password");
@@ -270,7 +311,7 @@
 
 
 			    function check_password_strength(){
-			    	var strong_password_regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+			    	var strong_password_regex = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
 			    	if(!strong_password_regex.test(password)){
 			    		toggledisplay(password_info_div,"none",password_warning_div,"block");
 			    		password_warning_div.innerHTML = "Please choose a stronger password. Try a mix of letters, numbers, and symbols.";
@@ -282,15 +323,6 @@
 			    	}
 			    }
 
-
-			    function toggledisplay(elem1,val1,elem2,val2){
-			    	elem1.style.display = val1;
-			    	elem2.style.display = val2;
-			    }
-
-			    function setdisplay(elem,val){
-			    	elem.style.display = val;
-			    }
 
 			    var valid_count = 0;
  				if(check_fn()){
@@ -311,13 +343,60 @@
  						}
  					}
  				}
+ 				var reg_container = document.getElementById("reg_container");
+ 				var phone_container = document.getElementById("phone_container");
  				if(valid_count == 6){
- 					alert("All good!");
- 					return true;
+ 					localStorage.setItem("first_name", fname);
+ 					localStorage.setItem("last_name", lname);
+ 					localStorage.setItem("email", email);
+ 					localStorage.setItem("password", password);
+ 					toggledisplay(reg_container,"none",phone_container,"block");
+ 					return false;
  				}
 			    return false;
 			}
-
+			function validate_number(){
+				var phone_tag = document.getElementById("phone");
+				var phone = phone_tag.value;
+				var phone_warning_div = document.getElementById("phone_warning");
+				var verification_form = document.getElementById("verification_form");
+				var phone_form = document.getElementById("phone_form");
+				var phone_number_div = document.getElementById("phone_number");
+				var phone_regex = /^\d{10}$/;
+				function check_phone(){
+			    	var warning = "";
+				    if(phone==""){
+				    	warning = "Please enter a phone number";
+				    }else if(!phone_regex.test(phone)){
+				    	warning = "This phone number format is not recognized. Please enter a valid phone number.";
+				    }
+				    if(warning){
+				    	phone_tag.style.borderColor = "red";
+				    	setdisplay(phone_warning_div,"block");
+				    	phone_warning_div.innerHTML = warning;
+				    }else{
+				    	localStorage.setItem("phone", phone);
+				    	setdisplay(phone_warning_div,"none");
+						number_verifier();
+				    }
+				    return warning == "";
+			    }
+			    check_phone();
+			    return false;
+			}
+			function number_verifier(){
+				var phone_form = document.getElementById("phone_form");
+				var verification_form = document.getElementById("verification_form");
+				var phone_number_div = document.getElementById("phone_number");
+				toggledisplay(phone_form,"none", verification_form,"block");
+				phone_number_div.innerHTML = localStorage.getItem("phone");
+			}
+	    	
+	    	function validate_verification() {
+	    		alert("Retrieve all data from localStorage and post it to the server");
+	    		return true;
+	    	}
+				    
 			function hide() {
 			  	document.getElementById("password").type = "password";
 			  	document.getElementById("confirm").type = "password";
@@ -332,11 +411,11 @@
 			}
 		</script>
 	</head>
-	<body>
+	<body onload="iniVar()">
 		<div id="main_container">
 			<div id="signup_container">
 				<div id="google">Google</div>
-				<div id="signup_form">
+				<div id="reg_container">
 					<div id="info">
 						<h2>
 							Create your Google Account
@@ -345,7 +424,7 @@
 							Continue to Gmail
 						</p>
 					</div>
-					<form id="reg_form" name="RegForm" onsubmit="return validate_form()" method="post">
+					<form id="reg_form" name="reg_form" onsubmit="return validate_form()" method="post">
 						<div id="name_container" class="container">
 							<div class="input_wrapper">
 								<div class="input_field">
@@ -409,14 +488,57 @@
 							</div>
 						</div>
 						<div id="submit_container" class="container">
-							<a href="login.php" id="login">Sign in instead</a>
-							<button type="submit" name="NEXT" value="NEXT" id="next">NEXT</button>
+							<a href="login.php" class= "login" id="signin">Sign in instead</a>
+							<button type="submit" class="next" name="NEXT1" value="NEXT1" id="next1">NEXT</button>
 						</div>
 					</form>
-					<form id="phone_form" name="PhoneForm" onsubmit="return validate_phone()" method="post" novalidate>
-						
-					</form>
 				</div>	
+				<div id="phone_container">
+					<div id="info">
+						<h2>
+							Verify your phone number
+						</h2>
+						<p>
+							For your security, Google wants to make sure it’s really you. Google will send a text message with a 6-digit verification code. Standard rates apply
+						</p>
+					</div>
+					<form id="phone_form" name="phone_form" onsubmit="return validate_number()" method="post">
+						<div id="phone_number_container" class="container">
+							<div class="input_wrapper">
+								<div class="input_field">
+									<input type="text" name="phone" id="phone" placeholder="Phone Number">
+								</div>
+								<div>
+									<div class="warning" id="phone_warning"></div>	
+								</div>
+							</div>
+						</div>
+						<div id="submit_container" class="container">
+							<a href="#" class = "login" onclick="first_page()" id="first_page_switcher">Back</a>
+							<button type="submit" class="next" name="NEXT2" value="NEXT2" id="next2">NEXT</button>
+						</div>
+					</form>
+
+					<form id="verification_form" name="verification_form" onsubmit="return validate_verification()" method="post">
+						<div id="phone_number"></div>
+						<div id="verification_container" class="container">
+							<div class="input_wrapper">
+								<div class="input_field">
+									<input type="text" name="verification" id="verification" placeholder="Enter verification code">
+								</div>
+								<div>
+									<div class="warning" id="verification_warning"></div>	
+								</div>
+							</div>
+						</div>
+
+						<div id="submit_container" class="container">
+							<a href="#" class = "login" onclick="second_page()" id="second_page_switcher">Back</a>
+							<button type="submit" class="next" name="NEXT3" value="NEXT3" id="next3">VERIFY</button>
+						</div>
+					</form>
+				</div>
+					
 			</div>
 			<div id="logo_container">
 				<figure class="btOOZe" style="">
