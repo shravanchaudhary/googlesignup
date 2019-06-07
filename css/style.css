@@ -1,0 +1,157 @@
+body{
+	padding: 22px;
+}
+#main_container {
+	height: 454px;
+	width: 668px;
+	padding: 48px 40px 36px 40px; 
+	margin: auto;
+	border-radius: 8px;
+	border-style: solid;
+		border-width: 1px;
+		border-color: #dadce0;
+}
+#signup_container {
+	float: left;
+	height: 454px;
+	width: 368px;
+	margin-left: -48px;
+	margin-right: -48px; 
+	padding-left: 48px;
+	padding-right: 48px;
+} 
+#logo_container {
+	float: left;
+	padding-left: 48px;
+	height: 454px;
+	width: 252px;
+} 
+.container{
+	clear:both;
+	width: 100%;
+	padding: 1px;
+	display: table;
+	table-layout: fixed;
+	height: 60px;
+}
+.input_wrapper{
+	display: table-cell;
+	padding-top: 3px;
+	padding-right: 8px;
+}
+
+#emailinfo{
+	height: 50px;
+}
+#passwordinfo{
+	height: 50px;
+}
+.input_field{
+	margin-right: 30px;
+}
+.input_field input{
+	width: 100%;
+	display: block;
+	border-radius: 4px;
+	border: solid #dadce0 1px;
+	font-size: 14px;
+    height: 20px;
+    padding: 7px 11px;
+}
+.warning{
+	font-size: 13px;
+	padding-top: 6px;
+	color:red;
+	display: none;
+	height: 44px;
+	width: auto;
+}
+.infopanel{
+	display: table-row;
+	line-height: 30px;
+	font-size: 13px;
+	color:black;
+	margin-bottom: 50px;
+}
+#google{
+	height: 24px;
+	font-size: 20px;
+}
+#info{
+	width: 368px;
+	height: 80px;
+}
+#info > h2{
+	margin:0px;
+	height: 32px;
+	padding-top: 16px;
+}
+#info > p{
+	margin:0px;
+	height: 24px;
+	padding-top: 8px;
+}
+form{
+	margin-top: 25px;
+}
+
+.login{
+	margin-top: 10px;
+	padding-top:10px;
+	float: left;
+	text-decoration: none;
+	color:#1a73e8;
+}
+.next{
+	margin: 10px;
+	padding:10px;
+	float: right;
+	width: 100px;
+	border-radius: 3px;
+	background-color:rgb(26, 115, 232);
+	color:white;
+	font-weight: bold;
+	cursor: pointer;
+}
+figure {
+    margin-right: 4px;
+    margin-left: 4px;
+    margin-top: 80px;
+}
+figcaption {
+    display: block;
+    text-align: center;
+}
+
+.showhide img{
+	height: 24px;
+	width: 24px;
+	padding-bottom: 5px;
+	vertical-align: middle;
+	cursor:pointer;
+}
+#show{
+	display: none;
+}
+div[id=password_warning]{
+	width: 156px;
+}
+#reg_container{
+	display: block;
+}
+#phone_container{
+	display: none;
+}
+#phone_form{
+	margin-top: 60px;
+}
+#verification_form{
+	margin-top: 60px;
+}
+#verification_form{
+	display: none;
+}
+#phone_number{
+	font-weight: bold;
+	margin:10px;
+}
